@@ -1,15 +1,17 @@
 'use strict';
 
 import passport from 'passport';
-import LocalStrategy from 'passport-local';
-import FacebookStrategy from 'passport-facebook';
+import Local from 'passport-local';
+import Facebook from 'passport-facebook';
 import User from '../models/user';
-import {[process.env.NODE_ENV || 'development'] as secrets} from './secrets';
+import config from './secrets';
 import mongoose from 'mongoose';
 
+let secrets = config[process.env.NODE_ENV || 'development'];
+
 // Passport strategies
-LocalStrategy = LocalStrategy.Strategy;
-FacebookStrategy = FacebookStrategy.Strategy;
+let LocalStrategy = Local.Strategy;
+let FacebookStrategy = Facebook.Strategy;
 
 // Session de/serialize
 passport.serializeUser((user, done) => {
@@ -197,7 +199,7 @@ let isAuthenticated = (req, res, next) => {
 let isAuthorized = (req, res, next) => {
   // hack for now
   return next();
-  
+
   var provider = req.path.split('/').slice(-1)[0];
 
   if (_.find(req.user.tokens, { kind: provider })) {

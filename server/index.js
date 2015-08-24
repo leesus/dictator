@@ -2,7 +2,7 @@
 
 import express from 'express';
 import path from 'path';
-import favicon from 'static-favicon';
+import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -13,7 +13,7 @@ import validator from 'express-validator';
 // Dependencies
 import passport from 'passport';
 import mongoose from 'mongoose';
-import MongoStore from 'connect-mongo')({ session: session });
+import Store from 'connect-mongo';
 import flash from 'express-flash';
 
 // Routes
@@ -21,15 +21,19 @@ import routes from './routes';
 
 // Config
 import passportConfig from './config/passport';
-import [process.env.NODE_ENV || 'development'] from './config/secrets';
+import config from './config/secrets';
+
+let secrets = config[process.env.NODE_ENV || 'development'];
 
 // Create express
-import app = express();
+let app = express();
+
+let MongoStore = Store({ session: session });
 
 // Connect to mongo
 mongoose.connect(secrets.db);
-mongoose.connection.on('error', => console.error('MongoDB Connection Error. Make sure MongoDB is running.'));
-mongoose.connection.on('disconnect', => mongoose.connect(secrets.db));
+mongoose.connection.on('error', () => console.error('MongoDB Connection Error. Make sure MongoDB is running.'));
+mongoose.connection.on('disconnect', () => mongoose.connect(secrets.db));
 
 // view engine setup
 app.set('port', process.env.PORT || 3000);
@@ -37,18 +41,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade')
 app.use(compress());
 app.use(validator());
-app.use(favicon());
+//app.use(favicon(path.join(__dirname, '/favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
     secret: secrets.sessionSecret,
     store: new MongoStore({
         url: secrets.db,
-        auto_reconnect: true,
+        autoReconnect: true,
         collection: 'session'
-    })
+    }),
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());

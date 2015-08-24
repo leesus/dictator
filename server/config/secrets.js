@@ -1,4 +1,4 @@
-export {
+export default {
   development: {
     db: process.env.MONGODB || 'mongodb://localhost:27017/development',
 

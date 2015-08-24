@@ -2,17 +2,17 @@
 
 import express from 'express';
 import passport from 'passport';
-import passportConfig from '../config/passport';
+import * as passportConfig from '../config/passport';
 
 let router = express.Router();
 
 // Controllers
-import auth from '../controllers/auth';
-import user from '../controllers/user';
-import note from '../controllers/note';
+import * as auth from '../controllers/auth';
+import * as user from '../controllers/user';
+import * as note from '../controllers/note';
 
 // Middleware
-var isAuthenticated = passportConfig.isAuthenticated;
+let isAuthenticated = passportConfig.isAuthenticated;
 
 // Routes
 router
@@ -36,12 +36,11 @@ router
   .get('/users/:id', isAuthenticated, user.getUserById)
   .delete('/users/:id', isAuthenticated, user.removeUser)
   // Note routes
-  .post('/notes', isAuthenticated, note.addDebt)
-  .put('/notes/:id', isAuthenticated, note.updateDebt)
-  .get('/notes/owed', isAuthenticated, note.getDebtsOwedToUser)
-  .get('/notes/owes', isAuthenticated, note.getDebtsOwedByUser)
-  .get('/notes/:id', isAuthenticated, note.getDebt)
-  .delete('/notes/:id', isAuthenticated, note.removeDebt);
+  .post('/notes', isAuthenticated, note.addNote)
+  .put('/notes/:id', isAuthenticated, note.updateNote)
+  .get('/notes/foruser', isAuthenticated, note.getNotesForUser)
+  .get('/notes/:id', isAuthenticated, note.getNote)
+  .delete('/notes/:id', isAuthenticated, note.removeNote);
 
 // Export routes
 export default router;
