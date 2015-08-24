@@ -1,0 +1,23 @@
+{
+  "name": "dictator",
+  "version": "0.0.0",
+  "description": "Dictaphone style notes application",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter dot **/*.spec.js",
+    "start": "babel-node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leesus/dictator.git"
+  },
+  "author": "leesus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leesus/dictator/issues"
+  },
+  "homepage": "https://github.com/leesus/dictator#readme",
+  "dependencies": {
+    "babel": "^5.8.21"
+  }
+}
