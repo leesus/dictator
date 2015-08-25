@@ -16,7 +16,7 @@ import Debt from '../../../models/note';
 let ObjectId = mongoose.Types.ObjectId;
 let agent = supertest.agent(app);
 
-xdescribe('Note controller', function() {
+describe('Note controller', function() {
 
   it('should have an addDebt method', function() {
     debtController.addDebt.should.exist;
