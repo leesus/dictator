@@ -28,13 +28,6 @@ router
   .get('/auth/failure', (req, res) => {
     res.render('after-auth.ejs', { state: 'failure', user: null });
   })
-  // User routes
-  .post('/users', isAuthenticated, user.addUser)
-  .put('/users/:id', isAuthenticated, user.updateUser)
-  .get('/users', isAuthenticated, user.getUsers)
-  .get('/users/search/:query', isAuthenticated, user.findUsers)
-  .get('/users/:id', isAuthenticated, user.getUserById)
-  .delete('/users/:id', isAuthenticated, user.removeUser)
   // Note routes
   .post('/notes', isAuthenticated, note.addNote)
   .put('/notes/:id', isAuthenticated, note.updateNote)
