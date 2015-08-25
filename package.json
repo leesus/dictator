@@ -4,7 +4,7 @@
   "description": "Dictaphone style notes application",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter dot **/*.spec.js",
+    "test": "mocha --reporter dot --timeout 5000 --require babel/register **/*.spec.js",
     "start": "babel-node ./index.js"
   },
   "repository": {
@@ -36,5 +36,11 @@
     "serve-favicon": "^2.3.0",
     "static-favicon": "^2.0.0-alpha",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^7.0.4",
+    "sinon": "^1.16.1",
+    "supertest": "^1.0.1"
   }
 }

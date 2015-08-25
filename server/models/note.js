@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var NoteSchema = new Schema({
+let NoteSchema = new Schema({
   // User note belongs to, maps to user._id
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 
@@ -19,9 +19,9 @@ var NoteSchema = new Schema({
   updated_date: { type: Date, 'default': Date.now }
 });
 
-NoteSchema.pre('save', (next) => {
+NoteSchema.pre('save', function(next) {
   this.updated_date = Date.now();
   next();
 });
 
-export default mongoose.model('Debt', NoteSchema);
+export default mongoose.model('Note', NoteSchema);

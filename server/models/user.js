@@ -23,7 +23,7 @@ let UserSchema = new Schema({
   notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]
 });
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function(next) {
   let user = this;
 
   if (!user.display_name && user.first_name && user.last_name) user.display_name = user.first_name + ' ' + user.last_name;
@@ -31,6 +31,7 @@ UserSchema.pre('save', (next) => {
   
   bcrypt.genSalt(10, (err, salt) => {
     if (err) return next(err);
+
     bcrypt.hash(user.password, salt, (err, hash) => {
       if (err) return next(err);
       user.password = hash;
@@ -39,9 +40,10 @@ UserSchema.pre('save', (next) => {
   });
 });
 
-UserSchema.methods.comparePassword = (password, fn) => {
+UserSchema.methods.comparePassword = function(password, fn) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return fn(err);
+
     fn(null, isMatch);
   });
 };
