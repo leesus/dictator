@@ -4,11 +4,10 @@ import express from 'express';
 import passport from 'passport';
 import * as passportConfig from '../config/passport';
 
-let router = express.Router();
+const router = express.Router();
 
 // Controllers
 import * as auth from '../controllers/auth';
-import * as user from '../controllers/user';
 import * as note from '../controllers/note';
 
 // Middleware
