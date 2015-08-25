@@ -38,7 +38,7 @@ router
   // Note routes
   .post('/notes', isAuthenticated, note.addNote)
   .put('/notes/:id', isAuthenticated, note.updateNote)
-  .get('/notes/foruser', isAuthenticated, note.getNotesForUser)
+  .get('/notes', isAuthenticated, note.getNotes)
   .get('/notes/:id', isAuthenticated, note.getNote)
   .delete('/notes/:id', isAuthenticated, note.removeNote);
 

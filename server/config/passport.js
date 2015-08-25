@@ -188,19 +188,13 @@ passport.use(new FacebookStrategy(secrets.facebook, (req, token, refreshToken, p
 
 // Middleware
 let isAuthenticated = (req, res, next) => {
-  // hack for now
-  return next();
-
   if (req.isAuthenticated()) return next();
   res.status(401);
   return next(new Error('Unauthorized request.'));
 };
 
 let isAuthorized = (req, res, next) => {
-  // hack for now
-  return next();
-
-  var provider = req.path.split('/').slice(-1)[0];
+  let provider = req.path.split('/').slice(-1)[0];
 
   if (_.find(req.user.tokens, { kind: provider })) {
     next();
